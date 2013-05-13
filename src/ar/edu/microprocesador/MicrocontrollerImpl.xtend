@@ -1,11 +1,11 @@
 package ar.edu.microprocesador
 
-import java.util.List
-import ar.edu.microprocesador.instrucciones.Instruccion
 import ar.edu.microprocesador.excepciones.SystemException
+import ar.edu.microprocesador.instrucciones.Instruccion
 import java.util.ArrayList
+import java.util.List
 
-class MicrocontrollerImpl extends Microcontroller {
+class MicrocontrollerImpl implements Microcontroller {
 	
 	byte acumuladorA
 	byte acumuladorB
@@ -41,7 +41,7 @@ class MicrocontrollerImpl extends Microcontroller {
 	}
 	
 	override getPC() {
-		programCounter
+		programCounter as byte
 	}
 	
 	override advancePC() {
