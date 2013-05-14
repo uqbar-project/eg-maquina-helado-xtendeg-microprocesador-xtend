@@ -13,14 +13,12 @@ class MicrocontrollerImpl implements Microcontroller {
 	List<Byte> datos
 
 	new() {
-		this.reset()
+		this.reset
 	}
 	
 	override run(List<Instruccion> program) {
-		this.reset()
-		for (Instruccion instruccion : program) {
-			instruccion.execute(this)
-		}
+		this.reset
+		program.forEach [ instruccion | instruccion.execute(this) ]
 	}
 	
 	/** Manejo del estado del microcontroller */
