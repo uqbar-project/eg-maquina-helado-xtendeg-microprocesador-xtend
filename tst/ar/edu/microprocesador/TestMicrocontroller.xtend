@@ -23,11 +23,12 @@ class TestMicrocontroller {
 	}
 
 	@Test
-	def void programCounter() {
+	def void programCounterAvanzaConNOP() {
 		var instrucciones = new ArrayList<Instruccion>
-		instrucciones.add(new NOP)
-		instrucciones.add(new NOP)
-		instrucciones.add(new NOP)
+		var nop = new NOP
+		instrucciones.add(nop)
+		instrucciones.add(nop)
+		instrucciones.add(nop)
 		micro.run(instrucciones)
 		Assert::assertEquals(3, micro.PC)
 	}
@@ -68,10 +69,10 @@ class TestMicrocontroller {
 
 	/**
 	 * BONUS 3 : requiere mayor manejo del micro
-	 * Se desea poder deshacer la �ltima instrucci�n ejecutada 
+	 * Se desea poder deshacer la última instrucción ejecutada 
 	 * (o sea, que el microprocesador vuelva al estado anterior). 
 	 * Ejemplo: si se hizo un SWAP, el acumulador A debe volver a tener lo que
-	 *  el acumulador B ten�a y viceversa. En el caso del ADD se debe deshacer 
+	 *  el acumulador B tenía y viceversa. En el caso del ADD se debe deshacer 
 	 *  la suma y los valores de los acumuladores deben quedar como estaban
 	 *  previamente. 
 	 **/
