@@ -76,11 +76,7 @@ class MicrocontrollerImpl implements Microcontroller {
 	}
 	
 	override clone() {
-		try {
-			return super.clone
-		} catch (CloneNotSupportedException e) {
-			throw new SystemException(e)
-		}
+		return super.clone
 	}
 	
 }
