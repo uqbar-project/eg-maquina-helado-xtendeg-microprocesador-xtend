@@ -8,8 +8,8 @@ abstract class Instruccion {
 
 	def void execute(Microcontroller micro) {
 		microBefore = micro.clone as Microcontroller
-		micro.advancePC
 		this.doExecute(micro)
+		micro.advancePC
 	}
 
 	def void doExecute(Microcontroller micro)
