@@ -27,7 +27,7 @@ class ProgramIterator implements Iterator<Instruccion> {
 	}
 
 	override next() {
-		val valorActual = readByteActual
+		val valorActual = this.readByteActual()
 		this.advanceIndex()
 		InstruccionFactory::instance.getInstruction(valorActual, this)
 	}
