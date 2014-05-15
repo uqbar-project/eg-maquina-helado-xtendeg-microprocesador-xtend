@@ -72,12 +72,10 @@ class TestMicrocontroller {
 	 * Se desea poder deshacer la última instrucción ejecutada 
 	 * (o sea, que el microprocesador vuelva al estado anterior). 
 	 * Ejemplo: si se hizo un SWAP, el acumulador A debe volver a tener lo que
-	 *  el acumulador B tenía y viceversa. En el caso del ADD se debe deshacer 
-	 *  la suma y los valores de los acumuladores deben quedar como estaban
-	 *  previamente. 
+	 *  el acumulador B tenía y viceversa. 
 	 **/
 	@Test
-	def void undo() {
+	def void undoSWAP() {
 		var carga100 = new LODV(100)
 		var swap = new SWAP
 		carga100.execute(micro)
@@ -87,6 +85,19 @@ class TestMicrocontroller {
 		swap.undo(micro)
 		Assert.assertEquals(0, micro.BAcumulator)
 		Assert.assertEquals(100, micro.AAcumulator)
+	}
+
+	/**
+	 * Segundo test, undo
+	 * En el caso del ADD se debe deshacer 
+	 *  la suma y los valores de los acumuladores deben quedar como estaban
+	 *  previamente. 
+	 */
+	@Test
+	def void undoADD() {
+		var carga100 = new LODV(100)
+		var swap = new SWAP
+		carga100.execute(micro)
 		swap.execute(micro)
 		new LODV(50).execute(micro)
 		var suma = new ADD

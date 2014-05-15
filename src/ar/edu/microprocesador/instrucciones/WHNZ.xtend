@@ -14,7 +14,7 @@ class WHNZ extends InstruccionMultiple {
 
 	override doExecute(Microcontroller micro) {
 		vecesQueFueEjecutado = 0
-		while (micro.getAAcumulator() != 0) {
+		while (micro.AAcumulator != 0) {
 			vecesQueFueEjecutado = vecesQueFueEjecutado + 1
 			super.doExecute(micro)
 		}
