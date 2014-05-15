@@ -30,7 +30,7 @@ class TestMicrocontroller {
 		instrucciones.add(nop)
 		instrucciones.add(nop)
 		micro.run(instrucciones)
-		Assert::assertEquals(3, micro.PC)
+		Assert.assertEquals(3, micro.PC)
 	}
 
 	@Test
@@ -41,8 +41,8 @@ class TestMicrocontroller {
 		instrucciones.add(new LODV(22))
 		instrucciones.add(new ADD)
 		micro.run(instrucciones)
-		Assert::assertEquals(0, micro.AAcumulator)
-		Assert::assertEquals(32, micro.BAcumulator)
+		Assert.assertEquals(0, micro.AAcumulator)
+		Assert.assertEquals(32, micro.BAcumulator)
 	}
 
 	@Test
@@ -53,8 +53,8 @@ class TestMicrocontroller {
 		instrucciones.add(new LODV(50))
 		instrucciones.add(new ADD)
 		micro.run(instrucciones)
-		Assert::assertEquals(23, micro.AAcumulator)
-		Assert::assertEquals(127, micro.BAcumulator)
+		Assert.assertEquals(23, micro.AAcumulator)
+		Assert.assertEquals(127, micro.BAcumulator)
 	}
 
 	@Test(expected=typeof(ArithmeticException))
@@ -82,20 +82,20 @@ class TestMicrocontroller {
 		var swap = new SWAP
 		carga100.execute(micro)
 		swap.execute(micro)
-		Assert::assertEquals(100, micro.BAcumulator)
-		Assert::assertEquals(0, micro.AAcumulator)
+		Assert.assertEquals(100, micro.BAcumulator)
+		Assert.assertEquals(0, micro.AAcumulator)
 		swap.undo(micro)
-		Assert::assertEquals(0, micro.BAcumulator)
-		Assert::assertEquals(100, micro.AAcumulator)
+		Assert.assertEquals(0, micro.BAcumulator)
+		Assert.assertEquals(100, micro.AAcumulator)
 		swap.execute(micro)
 		new LODV(50).execute(micro)
 		var suma = new ADD
 		suma.execute(micro)
-		Assert::assertEquals(23, micro.AAcumulator)
-		Assert::assertEquals(127, micro.BAcumulator)
+		Assert.assertEquals(23, micro.AAcumulator)
+		Assert.assertEquals(127, micro.BAcumulator)
 		suma.undo(micro)
-		Assert::assertEquals(50, micro.AAcumulator)
-		Assert::assertEquals(100, micro.BAcumulator)
+		Assert.assertEquals(50, micro.AAcumulator)
+		Assert.assertEquals(100, micro.BAcumulator)
 	}
 
 	// Test que prueba el while de 1 a 10 
@@ -115,7 +115,7 @@ class TestMicrocontroller {
 		instrucciones.add(bloqueWhile)
 		micro.run(instrucciones)
 		
-		Assert::assertEquals(10, bloqueWhile.vecesQueFueEjecutado)
+		Assert.assertEquals(10, bloqueWhile.vecesQueFueEjecutado)
 	}
 	
 }
