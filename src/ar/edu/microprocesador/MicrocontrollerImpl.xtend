@@ -1,6 +1,5 @@
 package ar.edu.microprocesador
 
-import ar.edu.microprocesador.excepciones.SystemException
 import ar.edu.microprocesador.instrucciones.Instruccion
 import java.util.ArrayList
 import java.util.List
@@ -65,9 +64,9 @@ class MicrocontrollerImpl implements Microcontroller {
 	}
 	
 	override copyFrom(Microcontroller micro) {
-		acumuladorA = micro.AAcumulator
-		acumuladorB = micro.BAcumulator
-		programCounter = micro.PC
+		acumuladorA = micro.getAAcumulator
+		acumuladorB = micro.getBAcumulator
+		programCounter = micro.getPC
 		programCounter = programCounter - 1
 		for (int i : 0..1023) {
 			val data = micro.getData(i) as byte
