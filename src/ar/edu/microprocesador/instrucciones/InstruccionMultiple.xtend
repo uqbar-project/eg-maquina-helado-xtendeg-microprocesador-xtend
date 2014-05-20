@@ -1,7 +1,7 @@
 package ar.edu.microprocesador.instrucciones
 
-import ar.edu.microprocesador.Microcontroller
 import java.util.List
+import ar.edu.microprocesador.Microcontroller
 
 class InstruccionMultiple extends Instruccion {
 	
