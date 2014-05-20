@@ -30,7 +30,7 @@ class TestMicrocontroller {
 		instrucciones.add(nop)
 		instrucciones.add(nop)
 		micro.run(instrucciones)
-		Assert.assertEquals(3, micro.PC)
+		Assert.assertEquals(3, micro.getPC)
 	}
 
 	@Test
@@ -41,8 +41,8 @@ class TestMicrocontroller {
 		instrucciones.add(new LODV(22))
 		instrucciones.add(new ADD)
 		micro.run(instrucciones)
-		Assert.assertEquals(0, micro.AAcumulator)
-		Assert.assertEquals(32, micro.BAcumulator)
+		Assert.assertEquals(0, micro.getAAcumulator)
+		Assert.assertEquals(32, micro.getBAcumulator)
 	}
 
 	@Test
@@ -53,8 +53,8 @@ class TestMicrocontroller {
 		instrucciones.add(new LODV(50))
 		instrucciones.add(new ADD)
 		micro.run(instrucciones)
-		Assert.assertEquals(23, micro.AAcumulator)
-		Assert.assertEquals(127, micro.BAcumulator)
+		Assert.assertEquals(23, micro.getAAcumulator)
+		Assert.assertEquals(127, micro.getBAcumulator)
 	}
 
 	@Test(expected=typeof(ArithmeticException))
@@ -80,11 +80,11 @@ class TestMicrocontroller {
 		var swap = new SWAP
 		carga100.execute(micro)
 		swap.execute(micro)
-		Assert.assertEquals(100, micro.BAcumulator)
-		Assert.assertEquals(0, micro.AAcumulator)
+		Assert.assertEquals(100, micro.getBAcumulator)
+		Assert.assertEquals(0, micro.getAAcumulator)
 		swap.undo(micro)
-		Assert.assertEquals(0, micro.BAcumulator)
-		Assert.assertEquals(100, micro.AAcumulator)
+		Assert.assertEquals(0, micro.getBAcumulator)
+		Assert.assertEquals(100, micro.getAAcumulator)
 	}
 
 	/**
@@ -102,11 +102,11 @@ class TestMicrocontroller {
 		new LODV(50).execute(micro)
 		var suma = new ADD
 		suma.execute(micro)
-		Assert.assertEquals(23, micro.AAcumulator)
-		Assert.assertEquals(127, micro.BAcumulator)
+		Assert.assertEquals(23, micro.getAAcumulator)
+		Assert.assertEquals(127, micro.getBAcumulator)
 		suma.undo(micro)
-		Assert.assertEquals(50, micro.AAcumulator)
-		Assert.assertEquals(100, micro.BAcumulator)
+		Assert.assertEquals(50, micro.getAAcumulator)
+		Assert.assertEquals(100, micro.getBAcumulator)
 	}
 
 	// Test que prueba el while de 1 a 10 
