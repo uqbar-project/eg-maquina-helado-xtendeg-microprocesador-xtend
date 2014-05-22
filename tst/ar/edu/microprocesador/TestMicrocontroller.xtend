@@ -114,12 +114,11 @@ class TestMicrocontroller {
 
 	@Test
 	def void ifSWAP() {
+		micro.AAcumulator = 5 as byte
+		micro.BAcumulator = 9 as byte
 		val programa = new ArrayList<Instruccion>
 		val subinstrucciones = new ArrayList<Instruccion>
 		subinstrucciones.add(new SWAP)
-		programa.add(new LODV(9))
-		programa.add(new SWAP)
-		programa.add(new LODV(5))
 		programa.add(new IFNZ(subinstrucciones))
 		micro.run(programa)
 		Assert.assertEquals(9, micro.AAcumulator)

@@ -16,7 +16,6 @@ class MicrocontrollerImpl implements Microcontroller {
 	}
 	
 	override run(List<Instruccion> program) {
-		this.reset
 		program.forEach [ instruccion | instruccion.execute(this) ]
 	}
 	
