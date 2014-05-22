@@ -5,7 +5,7 @@ import ar.edu.microprocesador.creationals.ProgramIterator
 import ar.edu.microprocesador.excepciones.SystemException
 
 abstract class Instruccion implements Cloneable {
-	
+
 	Microcontroller microBefore
 
 	def void execute(Microcontroller micro) {
@@ -14,7 +14,7 @@ abstract class Instruccion implements Cloneable {
 	}
 
 	def void doExecute(Microcontroller micro)
-	
+
 	def void undo(Microcontroller micro) {
 		micro.copyFrom(microBefore)
 	}
@@ -29,5 +29,15 @@ abstract class Instruccion implements Cloneable {
 		} catch (CloneNotSupportedException e) {
 			throw new SystemException("La instruccion " + this + " no es clonable")
 		}
-	}	
+	}
+
+	def actualizarAcumuladores(Microcontroller micro, int value) {
+		if (value > Byte.MAX_VALUE) {
+			micro.AAcumulator = Byte.MAX_VALUE
+			micro.BAcumulator = (value - Byte.MAX_VALUE) as byte
+		} else {
+			micro.AAcumulator = value as byte
+			micro.BAcumulator = 0 as byte
+		}
+	}
 }

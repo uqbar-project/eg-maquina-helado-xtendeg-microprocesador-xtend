@@ -1,12 +1,11 @@
 package ar.edu.microprocesador
 
+import ar.edu.microprocesador.creationals.ProgramBuilder
 import ar.edu.microprocesador.excepciones.SystemException
-import java.util.ArrayList
 import java.util.List
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
-import ar.edu.microprocesador.creationals.ProgramBuilder
 
 class TestMicrocontroller {
 
@@ -29,7 +28,7 @@ class TestMicrocontroller {
 		micro.step()
 		micro.step()
 		micro.stop()
-		Assert::assertEquals(3, micro.PC)
+		Assert.assertEquals(3, micro.PC)
 	}
 
 	@Test
@@ -41,8 +40,8 @@ class TestMicrocontroller {
 		micro.step()
 		micro.step()
 		micro.stop()
-		Assert::assertEquals(0, micro.AAcumulator)
-		Assert::assertEquals(13, micro.BAcumulator)
+		Assert.assertEquals(13, micro.AAcumulator)
+		Assert.assertEquals(0, micro.BAcumulator)
 	}
 
 	@Test(expected=typeof(SystemException))
@@ -65,25 +64,8 @@ class TestMicrocontroller {
 
 	@Test
 	def void ejecutarDosProgramas() {
-		micro.loadProgram(programSuma8y5)
-		micro.start()
-		micro.step()
-		micro.step()
-		micro.step()
-		micro.step()
-		micro.stop()
-		Assert::assertEquals(13, micro.BAcumulator)
-		Assert::assertEquals(0, micro.AAcumulator)
-
-		micro.loadProgram(programNOP)
-		micro.start()
-		micro.step()
-		micro.step()
-		micro.step()
-		micro.stop()
-		Assert::assertEquals(3, micro.PC)
-		Assert::assertEquals(0, micro.BAcumulator)
-		Assert::assertEquals(0, micro.AAcumulator)
+		suma()
+		nop()
 	}
 
 }

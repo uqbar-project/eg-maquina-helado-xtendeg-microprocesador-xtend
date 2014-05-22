@@ -1,9 +1,10 @@
 package ar.edu.microprocesador.creationals
 
+import java.util.ArrayList
 import java.util.List
 
 class ProgramBuilder {
-	List<Byte> programa
+	List<Byte> programa = new ArrayList<Byte>
 	
 	def List<Byte> build() {
 		programa

@@ -39,7 +39,7 @@ class TestMicrocontroller {
 		micro.step()
 		micro.step()
 		micro.stop()
-		Assert::assertEquals(3, micro.PC)
+		Assert.assertEquals(3, micro.PC)
 	}
 
 	@Test
@@ -51,8 +51,8 @@ class TestMicrocontroller {
 		micro.step()
 		micro.step()
 		micro.stop()
-		Assert::assertEquals(0, micro.AAcumulator)
-		Assert::assertEquals(13, micro.BAcumulator)
+		Assert.assertEquals(13, micro.AAcumulator)
+		Assert.assertEquals(0, micro.BAcumulator)
 	}
 
 	@Test(expected=typeof(SystemException))
@@ -82,8 +82,8 @@ class TestMicrocontroller {
 		micro.step()
 		micro.step()
 		micro.stop()
-		Assert::assertEquals(13, micro.BAcumulator)
-		Assert::assertEquals(0, micro.AAcumulator)
+		Assert.assertEquals(13, micro.AAcumulator)
+		Assert.assertEquals(0, micro.BAcumulator)
 
 		micro.loadProgram(programNOP)
 		micro.start()
@@ -91,9 +91,9 @@ class TestMicrocontroller {
 		micro.step()
 		micro.step()
 		micro.stop()
-		Assert::assertEquals(3, micro.PC)
-		Assert::assertEquals(0, micro.BAcumulator)
-		Assert::assertEquals(0, micro.AAcumulator)
+		Assert.assertEquals(3, micro.PC)
+		Assert.assertEquals(0, micro.AAcumulator)
+		Assert.assertEquals(0, micro.BAcumulator)
 	}
 
 }
