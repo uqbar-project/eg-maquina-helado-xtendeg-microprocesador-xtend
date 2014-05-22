@@ -77,5 +77,18 @@ class MicrocontrollerImpl implements Microcontroller {
 	override clone() {
 		return super.clone
 	}
-	
+
+	override toString() {
+		val result = new StringBuffer
+		result.append("****************************************\n")
+		result.append("*     ESTADO DEL MICROCONTROLADOR      *\n")
+		result.append("* acumA : " + this.AAcumulator + "\n")
+		result.append("* acumB : " + this.BAcumulator  + "\n")
+		result.append("* PC : " + this.PC + "\n")
+		result.append("* datos[0] : " + this.getData(0) + "\n")
+		result.append("* datos[1] : " + this.getData(1) + "\n")
+		result.append("* datos[2] : " + this.getData(2) + "\n")
+		result.append("****************************************\n")
+		result.toString
+	}	
 }
