@@ -1,17 +1,20 @@
 package ar.edu.microprocesador
 
-import org.junit.Before
-import org.junit.Test
-import ar.edu.microprocesador.instrucciones.NOP
-import java.util.ArrayList
-import ar.edu.microprocesador.instrucciones.Instruccion
-import ar.edu.microprocesador.instrucciones.LODV
-import ar.edu.microprocesador.instrucciones.SWAP
 import ar.edu.microprocesador.instrucciones.ADD
 import ar.edu.microprocesador.instrucciones.DIV
-import org.junit.Assert
-import ar.edu.microprocesador.instrucciones.WHNZ
+import ar.edu.microprocesador.instrucciones.IFNZ
+import ar.edu.microprocesador.instrucciones.Instruccion
+import ar.edu.microprocesador.instrucciones.LOD
+import ar.edu.microprocesador.instrucciones.LODV
+import ar.edu.microprocesador.instrucciones.NOP
+import ar.edu.microprocesador.instrucciones.STR
 import ar.edu.microprocesador.instrucciones.SUB
+import ar.edu.microprocesador.instrucciones.SWAP
+import ar.edu.microprocesador.instrucciones.WHNZ
+import java.util.ArrayList
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Test
 
 class TestMicrocontroller {
 	
@@ -41,8 +44,8 @@ class TestMicrocontroller {
 		instrucciones.add(new LODV(22))
 		instrucciones.add(new ADD)
 		micro.run(instrucciones)
-		Assert.assertEquals(0, micro.getAAcumulator)
-		Assert.assertEquals(32, micro.getBAcumulator)
+		Assert.assertEquals(32, micro.getAAcumulator)
+		Assert.assertEquals(0, micro.getBAcumulator)
 	}
 
 	@Test
@@ -53,8 +56,8 @@ class TestMicrocontroller {
 		instrucciones.add(new LODV(50))
 		instrucciones.add(new ADD)
 		micro.run(instrucciones)
-		Assert.assertEquals(23, micro.getAAcumulator)
-		Assert.assertEquals(127, micro.getBAcumulator)
+		Assert.assertEquals(127, micro.getAAcumulator)
+		Assert.assertEquals(23, micro.getBAcumulator)
 	}
 
 	@Test(expected=typeof(ArithmeticException))
@@ -102,31 +105,59 @@ class TestMicrocontroller {
 		new LODV(50).execute(micro)
 		var suma = new ADD
 		suma.execute(micro)
-		Assert.assertEquals(23, micro.getAAcumulator)
-		Assert.assertEquals(127, micro.getBAcumulator)
+		Assert.assertEquals(127, micro.getAAcumulator)
+		Assert.assertEquals(23, micro.getBAcumulator)
 		suma.undo(micro)
 		Assert.assertEquals(50, micro.getAAcumulator)
 		Assert.assertEquals(100, micro.getBAcumulator)
 	}
 
-	// Test que prueba el while de 1 a 10 
 	@Test
-	def void for1a10() {
+	def void ifSWAP() {
+		val programa = new ArrayList<Instruccion>
+		val subinstrucciones = new ArrayList<Instruccion>
+		subinstrucciones.add(new SWAP)
+		programa.add(new LODV(9))
+		programa.add(new SWAP)
+		programa.add(new LODV(5))
+		programa.add(new IFNZ(subinstrucciones))
+		micro.run(programa)
+		Assert.assertEquals(9, micro.AAcumulator)
+		Assert.assertEquals(5, micro.BAcumulator)
+	}
+
+	@Test
+	def void sumaPrimeros5Numeros() {
 		var instrucciones = new ArrayList<Instruccion>
-		// Cargo diez 
-		instrucciones.add(new LODV(1))
-		instrucciones.add(new SWAP)
-		instrucciones.add(new LODV(10))
+		// Cargo 0 (el T = total) en el campo de datos 1
+		// Cargo 5 (el I = indice) en Acumulador A 
+		instrucciones.add(new LODV(0))
+		instrucciones.add(new STR(1))
+		instrucciones.add(new LODV(5))
 		
 		var subInstrucciones = new ArrayList<Instruccion>
-		subInstrucciones.add(new SUB)
-		subInstrucciones.add(new LODV(1))
-		subInstrucciones.add(new SWAP)
+		// sumo al total el valor actual de I
+		subInstrucciones.add(new STR(0))  // guardo I en dir0 
+		subInstrucciones.add(new SWAP)    // lo paso a AcumB 
+		subInstrucciones.add(new LOD(1))  // bajo el total a AcumA
+		subInstrucciones.add(new ADD)     // sumo Total + I
+		subInstrucciones.add(new STR(1))  // guardo esa suma en dir1
+		// resto 1 a I
+		subInstrucciones.add(new LODV(1)) // cargo 1 en AcumA 
+		subInstrucciones.add(new SWAP)    // lo paso a AcumB
+		subInstrucciones.add(new LOD(0))  // cargo I en AcumA
+		subInstrucciones.add(new SUB)     // obtengo I - 1
+		
+		// ... y sigue el while
+		
 		var bloqueWhile = new WHNZ(subInstrucciones)
+		
+		// cuando termina el while , bajo el total a AcumA
 		instrucciones.add(bloqueWhile)
+		instrucciones.add(new LOD(1))  
 		micro.run(instrucciones)
 		
-		Assert.assertEquals(10, bloqueWhile.vecesQueFueEjecutado)
+		Assert.assertEquals(15, micro.AAcumulator)
 	}
 	
 }
