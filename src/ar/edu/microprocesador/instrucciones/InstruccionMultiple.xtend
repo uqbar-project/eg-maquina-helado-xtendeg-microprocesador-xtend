@@ -12,7 +12,10 @@ class InstruccionMultiple extends Instruccion {
 	}
 	
 	override doExecute(Microcontroller micro) {
-		instrucciones.forEach [ instruccion | instruccion.doExecute(micro) ]
+		instrucciones.forEach [ instruccion | 
+			instruccion.doExecute(micro)
+		]
+		println(micro.toString)
 	}
 	
 }
