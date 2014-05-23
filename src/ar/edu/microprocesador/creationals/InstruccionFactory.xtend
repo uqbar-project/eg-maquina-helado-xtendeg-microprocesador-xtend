@@ -41,12 +41,11 @@ class InstruccionFactory {
 		instructions.put(9 as byte, [ | new LODV ])
 	}
 
-	def getInstruction(byte codigoInstruccion, ProgramIterator programIt) {
+	def getInstruction(byte codigoInstruccion) {
 		var instruccionAEjecutar = instructions.get(codigoInstruccion).apply()
 		if (instruccionAEjecutar == null) {
 			throw new SystemException("La instrucción de código " + codigoInstruccion + " no es reconocida")
 		}
-		instruccionAEjecutar.prepare(programIt)
 		instruccionAEjecutar
 	}
 	

@@ -27,19 +27,19 @@ class ProgramIterator implements Iterator<Instruccion> {
 	}
 
 	override next() {
-		val valorActual = this.readByteActual()
+		val instruccion = InstruccionFactory.instance.getInstruction(nextValue)
+		instruccion.prepare(this)
+		instruccion
+	}
+
+	def byte nextValue() {
+		val valorActual = this.readByteActual
 		this.advanceIndex()
-		InstruccionFactory.instance.getInstruction(valorActual, this)
+		valorActual
 	}
 
 	def void advanceIndex() {
 		index = (index + 1) as byte
-	}
-
-	def byte nextValue() {
-		val valorActual = readByteActual
-		this.advanceIndex()
-		valorActual
 	}
 
 }
