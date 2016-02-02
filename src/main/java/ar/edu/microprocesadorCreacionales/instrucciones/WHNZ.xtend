@@ -1,8 +1,8 @@
-package ar.edu.microprocesador.instrucciones
+package ar.edu.microprocesadorCreacionales.instrucciones
 
-import ar.edu.microprocesador.instrucciones.Instruccion
+import ar.edu.microprocesadorCreacionales.instrucciones.Instruccion
 import java.util.List
-import ar.edu.microprocesador.Microcontroller
+import ar.edu.microprocesadorCreacionales.Microcontroller
 
 class WHNZ extends InstruccionMultiple {
 	

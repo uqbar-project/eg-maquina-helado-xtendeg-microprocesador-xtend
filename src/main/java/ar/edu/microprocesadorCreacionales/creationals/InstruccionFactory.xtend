@@ -1,11 +1,11 @@
-package ar.edu.microprocesador.creationals
+package ar.edu.microprocesadorCreacionales.creationals
 
-import ar.edu.microprocesador.excepciones.SystemException
-import ar.edu.microprocesador.instrucciones.ADD
-import ar.edu.microprocesador.instrucciones.Instruccion
-import ar.edu.microprocesador.instrucciones.LODV
-import ar.edu.microprocesador.instrucciones.NOP
-import ar.edu.microprocesador.instrucciones.SWAP
+import ar.edu.microprocesadorCreacionales.excepciones.SystemException
+import ar.edu.microprocesadorCreacionales.instrucciones.ADD
+import ar.edu.microprocesadorCreacionales.instrucciones.Instruccion
+import ar.edu.microprocesadorCreacionales.instrucciones.LODV
+import ar.edu.microprocesadorCreacionales.instrucciones.NOP
+import ar.edu.microprocesadorCreacionales.instrucciones.SWAP
 import java.util.HashMap
 import java.util.Map
 

@@ -1,7 +1,7 @@
-package ar.edu.microprocesador
+package ar.edu.microprocesadorCreacionales
 
-import ar.edu.microprocesador.excepciones.SystemException
-import java.util.ArrayList
+import ar.edu.microprocesadorCreacionales.creationals.ProgramBuilder
+import ar.edu.microprocesadorCreacionales.excepciones.SystemException
 import java.util.List
 import org.junit.Assert
 import org.junit.Before
@@ -16,19 +16,8 @@ class TestMicrocontroller {
 	@Before
 	def void setUp() {
 		micro = new MicrocontrollerImpl
-
-		programNOP = new ArrayList<Byte>
-		programNOP.add(1 as byte) // NOP
-		programNOP.add(1 as byte) // NOP
-		programNOP.add(1 as byte) // NOP
-
-		programSuma8y5 = new ArrayList<Byte>
-		programSuma8y5.add(9 as byte) // LODV 
-		programSuma8y5.add(8 as byte) // dato: 8  
-		programSuma8y5.add(5 as byte) // SWAP
-		programSuma8y5.add(9 as byte) // LODV 
-		programSuma8y5.add(5 as byte) // dato: 5
-		programSuma8y5.add(2 as byte) // ADD
+		programNOP = new ProgramBuilder().NOP.NOP.NOP.build
+		programSuma8y5 = new ProgramBuilder().LODV(8).SWAP.LODV(5).ADD.build()
 	}
 
 	@Test
@@ -75,25 +64,8 @@ class TestMicrocontroller {
 
 	@Test
 	def void ejecutarDosProgramas() {
-		micro.loadProgram(programSuma8y5)
-		micro.start()
-		micro.step()
-		micro.step()
-		micro.step()
-		micro.step()
-		micro.stop()
-		Assert.assertEquals(13, micro.AAcumulator)
-		Assert.assertEquals(0, micro.BAcumulator)
-
-		micro.loadProgram(programNOP)
-		micro.start()
-		micro.step()
-		micro.step()
-		micro.step()
-		micro.stop()
-		Assert.assertEquals(3, micro.PC)
-		Assert.assertEquals(0, micro.AAcumulator)
-		Assert.assertEquals(0, micro.BAcumulator)
+		suma()
+		nop()
 	}
 
 }

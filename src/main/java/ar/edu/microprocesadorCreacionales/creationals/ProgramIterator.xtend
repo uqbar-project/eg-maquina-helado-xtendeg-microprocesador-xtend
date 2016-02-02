@@ -1,6 +1,6 @@
-package ar.edu.microprocesador.creationals
+package ar.edu.microprocesadorCreacionales.creationals
 
-import ar.edu.microprocesador.instrucciones.Instruccion
+import ar.edu.microprocesadorCreacionales.instrucciones.Instruccion
 import java.util.Iterator
 import java.util.List
 

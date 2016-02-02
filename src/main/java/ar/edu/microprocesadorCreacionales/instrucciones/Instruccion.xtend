@@ -1,8 +1,8 @@
-package ar.edu.microprocesador.instrucciones
+package ar.edu.microprocesadorCreacionales.instrucciones
 
-import ar.edu.microprocesador.Microcontroller
-import ar.edu.microprocesador.creationals.ProgramIterator
-import ar.edu.microprocesador.excepciones.SystemException
+import ar.edu.microprocesadorCreacionales.Microcontroller
+import ar.edu.microprocesadorCreacionales.creationals.ProgramIterator
+import ar.edu.microprocesadorCreacionales.excepciones.SystemException
 
 abstract class Instruccion implements Cloneable {
 
