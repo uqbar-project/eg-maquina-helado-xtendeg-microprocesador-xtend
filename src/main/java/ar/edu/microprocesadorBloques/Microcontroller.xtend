@@ -1,4 +1,4 @@
-package ar.edu.microprocesador
+package ar.edu.microprocesadorBloques
 
 import java.util.List
 

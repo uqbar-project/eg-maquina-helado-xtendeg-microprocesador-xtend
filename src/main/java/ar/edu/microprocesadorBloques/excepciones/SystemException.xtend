@@ -1,4 +1,4 @@
-package ar.edu.microprocesador.excepciones
+package ar.edu.microprocesadorBloques.excepciones
 
 class SystemException extends RuntimeException {
 
