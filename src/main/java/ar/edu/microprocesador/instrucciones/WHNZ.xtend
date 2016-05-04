@@ -11,7 +11,7 @@ class WHNZ extends InstruccionMultiple {
 	}
 
 	override doExecute(Microcontroller micro) {
-		while (micro.getAAcumulator != 0) {
+		while (this.condicionACumplir(micro)) {
 			super.doExecute(micro)
 		}
 	}

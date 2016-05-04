@@ -12,10 +12,11 @@ class InstruccionMultiple extends Instruccion {
 	}
 	
 	override doExecute(Microcontroller micro) {
-		instrucciones.forEach [ instruccion | 
-			instruccion.doExecute(micro)
-		]
+		micro.run(instrucciones)
 		println(micro.toString)
 	}
 	
+	def condicionACumplir(Microcontroller micro) {
+		micro.AAcumulator != 0
+	}
 }

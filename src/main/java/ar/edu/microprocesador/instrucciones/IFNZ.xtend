@@ -10,7 +10,7 @@ class IFNZ extends InstruccionMultiple {
 	}
 	
 	override doExecute(Microcontroller micro) {
-		if (micro.AAcumulator != 0) {
+		if (this.condicionACumplir(micro)) {
 			super.doExecute(micro)
 		}
 	}
