@@ -7,7 +7,7 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 
-class TestMicrocontroller {
+class TestMicrocontrollerRefactorizado {
 
 	Microcontroller micro
 	List<Byte> programNOP
@@ -22,33 +22,38 @@ class TestMicrocontroller {
 
 	@Test
 	def void nop() {
-		micro.loadProgram(programNOP)
-		micro.start()
-		micro.step()
-		micro.step()
-		micro.step()
-		micro.stop()
+		micro => [
+			loadProgram(programNOP)
+			start
+			step
+			step
+			step
+		]
 		Assert.assertEquals(3, micro.PC)
 	}
 
 	@Test
 	def void suma() {
-		micro.loadProgram(programSuma8y5)
-		micro.start()
-		micro.step()
-		micro.step()
-		micro.step()
-		micro.step()
-		micro.stop()
+		micro => [
+			loadProgram(programSuma8y5)
+			start
+			step
+			step
+			step
+			step
+			stop
+		]
 		Assert.assertEquals(13, micro.AAcumulator)
 		Assert.assertEquals(0, micro.BAcumulator)
 	}
 
 	@Test(expected=typeof(SystemException))
 	def void cargarProgramaMientrasOtroEjecuta() {
-		micro.loadProgram(programNOP)
-		micro.start()
-		micro.loadProgram(programNOP)
+		micro => [
+			loadProgram(programNOP)
+			start
+			loadProgram(programNOP)
+		]
 	}
 
 	@Test(expected=typeof(SystemException))
