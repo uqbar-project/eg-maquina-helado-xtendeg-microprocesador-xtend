@@ -34,11 +34,12 @@ class InstruccionFactory {
 	}
 
 	def void initialize() {
-		instructions = new HashMap<Byte, () => Instruccion>
-		instructions.put(1 as byte, [ | new NOP ])
-		instructions.put(2 as byte, [ | new ADD ])
-		instructions.put(5 as byte, [ | new SWAP ])
-		instructions.put(9 as byte, [ | new LODV ])
+		instructions = new HashMap<Byte, () => Instruccion> => [
+			put(1 as byte, [ | new NOP ])
+			put(2 as byte, [ | new ADD ])
+			put(5 as byte, [ | new SWAP ])
+			put(9 as byte, [ | new LODV ])
+		]
 	}
 
 	def getInstruction(byte codigoInstruccion) {
