@@ -7,15 +7,15 @@ import java.util.List
 class ProgramIterator implements Iterator<Instruccion> {
 
 	List<Byte> programMemory
-	byte index
+	int index
 
 	new(List<Byte> program) {
 		programMemory = program
-		index = 0 as byte
+		index = 0
 	}
 
 	override hasNext() {
-		readByteActual > 0
+		index < programMemory.length
 	}
 
 	def byte readByteActual() {
@@ -27,7 +27,7 @@ class ProgramIterator implements Iterator<Instruccion> {
 	}
 
 	override next() {
-		val instruccion = InstruccionFactory.instance.getInstruction(nextValue)
+		val instruccion = InstruccionFactory.instance.getInstruction(nextValue) 
 		instruccion.prepare(this)
 		instruccion
 	}
@@ -39,7 +39,7 @@ class ProgramIterator implements Iterator<Instruccion> {
 	}
 
 	def void advanceIndex() {
-		index = (index + 1) as byte
+		index++
 	}
 
 }
