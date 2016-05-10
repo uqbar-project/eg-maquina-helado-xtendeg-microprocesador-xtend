@@ -18,28 +18,19 @@ class ProgramIterator implements Iterator<Instruccion> {
 		index < programMemory.length
 	}
 
-	def byte readByteActual() {
-		programMemory.get(index)
-	}
-
 	override remove() {
 		throw new UnsupportedOperationException("remove - Program Iterator")
 	}
 
 	override next() {
+		val nextValue = this.nextValue()
 		val instruccion = InstruccionFactory.instance.getInstruction(nextValue) 
 		instruccion.prepare(this)
 		instruccion
 	}
 
 	def byte nextValue() {
-		val valorActual = this.readByteActual
-		this.advanceIndex()
-		valorActual
-	}
-
-	def void advanceIndex() {
-		index++
+		programMemory.get(index++)
 	}
 
 }
