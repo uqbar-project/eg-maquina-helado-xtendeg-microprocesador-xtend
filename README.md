@@ -5,7 +5,7 @@
 
 ## Dominio
 * [Microprocesador, primera parte](https://docs.google.com/document/d/1-esJOhKb_yAABls-XdRrEYHzCv4yn-qqFtCu3xpgCg0/edit?usp=sharing)
-* [Microprocesador, segunda parte], con ejemplos creacionales (https://docs.google.com/document/d/1ILsxAvgZwPD4sTtB-rBq7wfJZf22e9G6qpllglAbT2g/edit?usp=sharing)
+* [Microprocesador, segunda parte](https://docs.google.com/document/d/1ILsxAvgZwPD4sTtB-rBq7wfJZf22e9G6qpllglAbT2g/edit?usp=sharing), con ejemplos creacionales
 
 ## Conceptos a ver
 
