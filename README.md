@@ -1,6 +1,8 @@
 
 # Ejercicio de Diseño - Microprocesador
 
+[![Build Status](https://travis-ci.org/uqbar-project/eg-microprocesador-xtend.svg?branch=simple)](https://travis-ci.org/uqbar-project/eg-microprocesador-xtend) [![Coverage Status](https://coveralls.io/repos/github/uqbar-project/eg-microprocesador-xtend/badge.svg?branch=simple)](https://coveralls.io/github/uqbar-project/eg-microprocesador-xtend?branch=simple)
+
 ![image](images/microprocessor.png) 
 
 ## Dominio
