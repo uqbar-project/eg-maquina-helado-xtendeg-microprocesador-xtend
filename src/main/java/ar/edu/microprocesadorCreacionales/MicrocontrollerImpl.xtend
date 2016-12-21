@@ -67,7 +67,7 @@ class MicrocontrollerImpl implements Microcontroller {
 		programCounter = micro.PC
 		programCounter = programCounter - 1
 		for (int i : 0..1023) {
-			val data = micro.getData(i) as byte
+			val data = micro.getData(i)
 			this.setData(i, data)
 		}
 	}
