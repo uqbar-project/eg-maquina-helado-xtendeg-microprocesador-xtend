@@ -54,7 +54,7 @@ class MicrocontrollerImpl implements Microcontroller {
 	}
 	
 	override getData(int addr) {
-		datos.get(addr) as byte
+		datos.get(addr)
 	}
 	
 	override setData(int addr, byte value) {

@@ -15,7 +15,7 @@ class ProgramIterator implements Iterator<Instruccion> {
 	}
 
 	override hasNext() {
-		index < programMemory.length
+		index < programMemory.size
 	}
 
 	override remove() {
