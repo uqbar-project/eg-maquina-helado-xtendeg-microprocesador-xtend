@@ -68,13 +68,13 @@ class MicrocontrollerImpl implements Microcontroller {
 		programCounter = micro.getPC
 		programCounter = programCounter - 1
 		for (int i : 0..1023) {
-			val data = micro.getData(i) as byte
+			val data = micro.getData(i)
 			this.setData(i, data)
 		}
 	}
 	
-	override clone() {
-		return super.clone
+	override copy() {
+		return this.clone
 	}
 
 	override toString() {

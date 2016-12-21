@@ -7,7 +7,7 @@ abstract class Instruccion {
 	Microcontroller microBefore
 
 	def void execute(Microcontroller micro) {
-		microBefore = micro.clone as Microcontroller
+		microBefore = micro.copy as Microcontroller
 		this.doExecute(micro)
 		micro.advancePC
 	}

@@ -24,7 +24,7 @@ interface Microcontroller extends Cloneable {
 	def void setData(int addr, byte value) 
 
 	/*** Definición abstracta del clone */ 
-	override Object clone()
+	def Object copy()
 	def void copyFrom(Microcontroller micro)
 	
 }
