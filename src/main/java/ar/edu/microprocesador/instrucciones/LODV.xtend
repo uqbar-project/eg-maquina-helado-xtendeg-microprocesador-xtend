@@ -5,18 +5,18 @@ import ar.edu.microprocesador.Microcontroller
 
 class LODV extends Instruccion {
 
-	int value
+	byte value
 	
 	new(int value) {
 		if (value > 255) {
 			throw new IllegalArgumentException("No debe crear una instrucción LODV de un número mayor a 255")
 		} else {
-			this.value = value
+			this.value = value as byte
 		}
 	}
 
 	override doExecute(Microcontroller micro) {
-		micro.AAcumulator = value as byte
+		micro.AAcumulator = value
 	}
 	
 }

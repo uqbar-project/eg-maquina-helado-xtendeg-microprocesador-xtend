@@ -29,23 +29,23 @@ class TestMicrocontroller {
 	def void programCounterAvanzaConNOP() {
 		val nop = new NOP
 		micro.run(
-			new ArrayList<Instruccion> => [
-				add(nop)
-				add(nop)
-				add(nop)
-			])
+			#[ 
+				nop, 
+				nop, 
+				nop
+			]
+			)
 		Assert.assertEquals(3, micro.getPC)
 	}
 
 	@Test
 	def void sumaSimple() {
-		val programaSumaSimple = new ArrayList<Instruccion> => [
-			add(new LODV(10))
-			add(new SWAP)
-			add(new LODV(22))
-			add(new ADD)
-		]
-		micro.run(programaSumaSimple)
+		micro.run(#[
+			new LODV(10),
+			new SWAP,
+			new LODV(22),
+			new ADD
+		])
 		Assert.assertEquals(32, micro.getAAcumulator)
 		Assert.assertEquals(0, micro.getBAcumulator)
 	}
@@ -53,11 +53,11 @@ class TestMicrocontroller {
 	@Test
 	def void sumaNumerosGrandes() {
 		micro.run(
-			new ArrayList<Instruccion> => [
-				add(new LODV(100))
-				add(new SWAP)
-				add(new LODV(50))
-				add(new ADD)
+			#[
+				new LODV(100),
+				new SWAP,
+				new LODV(50),
+				new ADD
 			])
 		Assert.assertEquals(127, micro.getAAcumulator)
 		Assert.assertEquals(23, micro.getBAcumulator)
@@ -66,11 +66,11 @@ class TestMicrocontroller {
 	@Test(expected=typeof(ArithmeticException))
 	def void divisionPorCero() {
 		micro.run(
-			new ArrayList<Instruccion> => [
-				add(new LODV(0))
-				add(new SWAP)
-				add(new LODV(2))
-				add(new DIV)
+			#[
+				new LODV(0),
+				new SWAP,
+				new LODV(2),
+				new DIV
 			])
 	}
 
@@ -120,11 +120,9 @@ class TestMicrocontroller {
 	def void ifSWAP() {
 		micro.AAcumulator = 5 as byte
 		micro.BAcumulator = 9 as byte
-		val programa = new ArrayList<Instruccion>
-		val subinstrucciones = new ArrayList<Instruccion>
-		subinstrucciones.add(new SWAP)
-		programa.add(new IFNZ(subinstrucciones))
-		micro.run(programa)
+		micro.run(#[
+			new IFNZ(#[new SWAP])
+		])
 		Assert.assertEquals(9, micro.AAcumulator)
 		Assert.assertEquals(5, micro.BAcumulator)
 	}
