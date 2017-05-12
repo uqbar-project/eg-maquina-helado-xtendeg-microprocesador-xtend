@@ -67,7 +67,7 @@ class MicrocontrollerImpl implements Microcontroller {
 		acumuladorB = micro.getBAcumulator
 		programCounter = micro.getPC
 		programCounter = programCounter - 1
-		for (int i : 0..1023) {
+		for (i : 0..1023) {
 			val data = micro.getData(i)
 			this.setData(i, data)
 		}

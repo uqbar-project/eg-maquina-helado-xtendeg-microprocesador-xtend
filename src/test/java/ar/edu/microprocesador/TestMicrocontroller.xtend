@@ -19,9 +19,10 @@ import org.junit.Test
 class TestMicrocontroller {
 
 	Microcontroller micro
+	Instruccion swap = new SWAP
 
 	@Before
-	def void setUp() {
+	def void init() {
 		micro = new MicrocontrollerImpl
 	}
 
@@ -42,7 +43,7 @@ class TestMicrocontroller {
 	def void sumaSimple() {
 		micro.run(#[
 			new LODV(10),
-			new SWAP,
+			swap,
 			new LODV(22),
 			new ADD
 		])
@@ -55,7 +56,7 @@ class TestMicrocontroller {
 		micro.run(
 			#[
 				new LODV(100),
-				new SWAP,
+				swap,
 				new LODV(50),
 				new ADD
 			])
@@ -68,7 +69,7 @@ class TestMicrocontroller {
 		micro.run(
 			#[
 				new LODV(0),
-				new SWAP,
+				swap,
 				new LODV(2),
 				new DIV
 			])
@@ -84,7 +85,7 @@ class TestMicrocontroller {
 	@Test
 	def void undoSWAP() {
 		val carga100 = new LODV(100)
-		val swap = new SWAP
+		val swap = swap
 		carga100.execute(micro)
 		swap.execute(micro)
 		Assert.assertEquals(100, micro.getBAcumulator)
@@ -103,7 +104,7 @@ class TestMicrocontroller {
 	@Test
 	def void undoADD() {
 		val carga100 = new LODV(100)
-		val swap = new SWAP
+		val swap = swap
 		carga100.execute(micro)
 		swap.execute(micro)
 		new LODV(50).execute(micro)
@@ -121,10 +122,35 @@ class TestMicrocontroller {
 		micro.AAcumulator = 5 as byte
 		micro.BAcumulator = 9 as byte
 		micro.run(#[
-			new IFNZ(#[new SWAP])
+			new IFNZ(#[swap])
 		])
 		Assert.assertEquals(9, micro.AAcumulator)
 		Assert.assertEquals(5, micro.BAcumulator)
+	}
+
+	@Test
+	def void ifSWAPnot() {
+		micro.AAcumulator = 0 as byte
+		micro.BAcumulator = 9 as byte
+		micro.run(#[
+			new IFNZ(#[swap])
+		])
+		Assert.assertEquals(0, micro.AAcumulator)
+		Assert.assertEquals(9, micro.BAcumulator)
+	}
+
+	@Test
+	def void ifVariasInstrucciones() {
+		micro.AAcumulator = 5 as byte
+		micro.BAcumulator = 9 as byte
+		micro.run(#[
+			new IFNZ(#[
+				swap,
+				new ADD
+			])
+		])
+		Assert.assertEquals(14, micro.AAcumulator)
+		Assert.assertEquals(0, micro.BAcumulator)
 	}
 
 	@Test
@@ -140,14 +166,14 @@ class TestMicrocontroller {
 		val iteracion = new ArrayList<Instruccion> => [
 			// sumo al total el valor actual de I
 			add(new STR(0)) // guardo I en dir0 
-			add(new SWAP) // lo paso a AcumB 
+			add(swap) // lo paso a AcumB 
 			add(new LOD(1)) // bajo el total a AcumA
 			add(new ADD) // sumo Total + I
 			add(new STR(1)) // guardo esa suma en dir1
 
 			// resto 1 a I
 			add(new LODV(1)) // cargo 1 en AcumA 
-			add(new SWAP) // lo paso a AcumB
+			add(swap) // lo paso a AcumB
 			add(new LOD(0)) // cargo I en AcumA
 			add(new SUB) // obtengo I - 1
 		]

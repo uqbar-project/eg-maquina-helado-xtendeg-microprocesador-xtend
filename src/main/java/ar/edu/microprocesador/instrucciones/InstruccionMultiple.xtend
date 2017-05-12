@@ -3,7 +3,7 @@ package ar.edu.microprocesador.instrucciones
 import java.util.List
 import ar.edu.microprocesador.Microcontroller
 
-class InstruccionMultiple extends Instruccion {
+abstract class InstruccionMultiple extends Instruccion {
 	
 	List<Instruccion> instrucciones
 	
