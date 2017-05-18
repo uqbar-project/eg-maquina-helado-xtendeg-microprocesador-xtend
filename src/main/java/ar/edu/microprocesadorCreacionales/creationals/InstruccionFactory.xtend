@@ -14,6 +14,12 @@ class InstruccionFactory {
 	static InstruccionFactory instance
 	Map<Byte, (ProgramIterator) => Instruccion> instructions
 	
+	/* Singleton instructions */
+	NOP nop
+	SWAP swap
+	ADD add
+	
+	
 	/**
 	 * El InstruccionFactory es un singleton, y tiene implementado un
 	 * conjunto conocido de instancias que modelan la instrucción
@@ -31,15 +37,19 @@ class InstruccionFactory {
 
 	private new() {
 		this.initialize()
+		
+		nop = new NOP
+		swap = new SWAP
+		add = new ADD
 	}
 
 	def void initialize() {
 		instructions = new HashMap<Byte, (ProgramIterator) => Instruccion> => [
-			put(1 as byte, [ micro | new NOP ])
-			put(2 as byte, [ micro | new ADD ])
-			put(5 as byte, [ micro | new SWAP ])
-			put(9 as byte, [ micro |
-				val dato = micro.nextValue 
+			put(1 as byte, [ programIt | nop ])
+			put(2 as byte, [ programIt | add ])
+			put(5 as byte, [ programIt | swap ])
+			put(9 as byte, [ programIt |
+				val dato = programIt.nextValue 
 				new LODV(dato)
 			])
 		]
