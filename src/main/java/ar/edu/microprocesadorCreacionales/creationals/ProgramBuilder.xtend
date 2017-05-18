@@ -7,6 +7,9 @@ class ProgramBuilder {
 	List<Byte> programa = new ArrayList<Byte>
 	
 	def List<Byte> build() {
+		if (programa.empty) {
+			throw new RuntimeException("No puede construir un programa vacío")
+		}
 		programa
 	}
 	

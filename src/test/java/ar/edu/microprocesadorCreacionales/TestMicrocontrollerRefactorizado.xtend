@@ -16,8 +16,18 @@ class TestMicrocontrollerRefactorizado {
 	@Before
 	def void setUp() {
 		micro = new MicrocontrollerImpl
-		programNOP = new ProgramBuilder().NOP.NOP.NOP.build
-		programSuma8y5 = new ProgramBuilder().LODV(8).SWAP.LODV(5).ADD.build()
+		programNOP = new ProgramBuilder()
+			.NOP
+			.NOP
+			.NOP
+			.build
+			
+		programSuma8y5 = new ProgramBuilder()
+			.LODV(8)
+			.SWAP
+			.LODV(5)
+			.ADD
+			.build
 	}
 
 	@Test

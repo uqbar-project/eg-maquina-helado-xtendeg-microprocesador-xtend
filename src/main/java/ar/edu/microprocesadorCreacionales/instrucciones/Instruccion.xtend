@@ -1,7 +1,6 @@
 package ar.edu.microprocesadorCreacionales.instrucciones
 
 import ar.edu.microprocesadorCreacionales.Microcontroller
-import ar.edu.microprocesadorCreacionales.creationals.ProgramIterator
 import ar.edu.microprocesadorCreacionales.excepciones.SystemException
 
 abstract class Instruccion implements Cloneable {
@@ -17,10 +16,6 @@ abstract class Instruccion implements Cloneable {
 
 	def void undo(Microcontroller micro) {
 		micro.copyFrom(microBefore)
-	}
-
-	def void prepare(ProgramIterator programIt) {
-		// Por default, no hago nada
 	}
 
 	override clone() {

@@ -86,7 +86,6 @@ class MicrocontrollerImpl implements Microcontroller {
 		}
 		this.reset()
 		this.programIterator = new ProgramIterator(program)
-		//this.programMemory = program
 	}
 	
 	override setInput(byte channel, byte value) {

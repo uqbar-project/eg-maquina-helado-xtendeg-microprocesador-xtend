@@ -12,7 +12,7 @@ import java.util.Map
 class InstruccionFactory {
 
 	static InstruccionFactory instance
-	Map<Byte, () => Instruccion> instructions
+	Map<Byte, (ProgramIterator) => Instruccion> instructions
 	
 	/**
 	 * El InstruccionFactory es un singleton, y tiene implementado un
@@ -34,16 +34,19 @@ class InstruccionFactory {
 	}
 
 	def void initialize() {
-		instructions = new HashMap<Byte, () => Instruccion> => [
-			put(1 as byte, [ | new NOP ])
-			put(2 as byte, [ | new ADD ])
-			put(5 as byte, [ | new SWAP ])
-			put(9 as byte, [ | new LODV ])
+		instructions = new HashMap<Byte, (ProgramIterator) => Instruccion> => [
+			put(1 as byte, [ micro | new NOP ])
+			put(2 as byte, [ micro | new ADD ])
+			put(5 as byte, [ micro | new SWAP ])
+			put(9 as byte, [ micro |
+				val dato = micro.nextValue 
+				new LODV(dato)
+			])
 		]
 	}
 
-	def getInstruction(byte codigoInstruccion) {
-		var instruccionAEjecutar = instructions.get(codigoInstruccion).apply()
+	def getInstruction(ProgramIterator programIt, byte codigoInstruccion) {
+		val instruccionAEjecutar = instructions.get(codigoInstruccion).apply(programIt)
 		if (instruccionAEjecutar == null) {
 			throw new SystemException("La instrucción de código " + codigoInstruccion + " no es reconocida")
 		}

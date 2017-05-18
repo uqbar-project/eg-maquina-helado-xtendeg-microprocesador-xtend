@@ -23,10 +23,8 @@ class ProgramIterator implements Iterator<Instruccion> {
 	}
 
 	override next() {
-		val nextValue = this.nextValue()
-		val instruccion = InstruccionFactory.instance.getInstruction(nextValue) 
-		instruccion.prepare(this)
-		instruccion
+		val instructionCode = this.nextValue()
+		InstruccionFactory.instance.getInstruction(this, instructionCode) 
 	}
 
 	def byte nextValue() {
