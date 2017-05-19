@@ -6,19 +6,12 @@ import ar.edu.microprocesadorCreacionales.instrucciones.Instruccion
 import ar.edu.microprocesadorCreacionales.instrucciones.LODV
 import ar.edu.microprocesadorCreacionales.instrucciones.NOP
 import ar.edu.microprocesadorCreacionales.instrucciones.SWAP
-import java.util.HashMap
 import java.util.Map
 
 class InstruccionFactory {
 
 	static InstruccionFactory instance
-	Map<Byte, (ProgramIterator) => Instruccion> instructions
-	
-	/* Singleton instructions */
-	NOP nop
-	SWAP swap
-	ADD add
-	
+	Map<Byte, AbstractOperationFactory> instructions
 	
 	/**
 	 * El InstruccionFactory es un singleton, y tiene implementado un
@@ -37,30 +30,63 @@ class InstruccionFactory {
 
 	private new() {
 		this.initialize()
-		
-		nop = new NOP
-		swap = new SWAP
-		add = new ADD
 	}
-
+	
 	def void initialize() {
-		instructions = new HashMap<Byte, (ProgramIterator) => Instruccion> => [
-			put(1 as byte, [ programIt | nop ])
-			put(2 as byte, [ programIt | add ])
-			put(5 as byte, [ programIt | swap ])
-			put(9 as byte, [ programIt |
-				val dato = programIt.nextValue 
-				new LODV(dato)
-			])
-		]
+		instructions = #{
+			1 as byte -> new NOPFactory,
+			2 as byte -> new ADDFactory,
+			5 as byte -> new SWAPFactory,
+			9 as byte -> new LODVFactory
+		}
 	}
 
 	def getInstruction(ProgramIterator programIt, byte codigoInstruccion) {
-		val instruccionAEjecutar = instructions.get(codigoInstruccion).apply(programIt)
+		val instruccionAEjecutar = instructions.get(codigoInstruccion).create(programIt)
 		if (instruccionAEjecutar == null) {
 			throw new SystemException("La instrucción de código " + codigoInstruccion + " no es reconocida")
 		}
 		instruccionAEjecutar
+	}
+	
+}
+
+abstract class AbstractOperationFactory {
+	def Instruccion create(ProgramIterator programIt)
+}
+
+class NOPFactory extends AbstractOperationFactory {
+	NOP nop = new NOP 
+	
+	override create(ProgramIterator programIt) {
+		nop	
+	}
+	
+}
+
+class ADDFactory extends AbstractOperationFactory {
+	ADD add = new ADD 
+	
+	override create(ProgramIterator programIt) {
+		add	
+	}
+	
+}
+
+class SWAPFactory extends AbstractOperationFactory {
+	SWAP swap = new SWAP 
+	
+	override create(ProgramIterator programIt) {
+		swap	
+	}
+	
+}
+
+class LODVFactory extends AbstractOperationFactory {
+	
+	override create(ProgramIterator programIt) {
+		val dato = programIt.nextValue 
+		new LODV(dato)
 	}
 	
 }
