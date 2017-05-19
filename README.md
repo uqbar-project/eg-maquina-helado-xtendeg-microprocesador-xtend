@@ -22,5 +22,6 @@
 
 * [__simple__](https://github.com/uqbar-project/eg-microprocesador-xtend/tree/simple): resuelve la primera parte del ejercicio (cada instrucción se implementa como un command pattern que permite ejecutarse y deshacerse)
 * [__creacionales__](https://github.com/uqbar-project/eg-microprocesador-xtend/tree/creacionales): resuelve la segunda parte del ejercicio (builder de un programa, y un iterador de instrucciones que utiliza un mapa para transformar un entero en un command)
+* [__factories__](https://github.com/uqbar-project/eg-microprocesador-xtend/tree/factories): resuelve la parte creacionales con un mapa de factories de instrucciones que tiene una jerarquía separada de las instrucciones, para evitar acoplar la instrucción con el iterador del programa.
 * [__bloques__](https://github.com/uqbar-project/eg-microprocesador-xtend/tree/bloques): cada instrucción se modela como un bloque de código o closure en lugar de subclasificar el command. Pese a su flexibilidad, no se permite heredar código entre los closures y tampoco es fácil entender qué operación hace cada bloque.
 
