@@ -108,7 +108,7 @@ class MicrocontrollerImpl implements Microcontroller {
 		if (!this.programStarted) {
 			throw new SystemException("No hay un programa en ejecución")
 		}
-		if (this.programIterator == null) {
+		if (this.programIterator === null) {
 			throw new SystemException("No hay un programa cargado en memoria")
 		}
 		if (!programIterator.hasNext()) {
