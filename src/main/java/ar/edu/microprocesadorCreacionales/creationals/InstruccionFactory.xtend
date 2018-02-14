@@ -22,7 +22,7 @@ class InstruccionFactory {
 	 * @return
 	 */
 	def static InstruccionFactory getInstance() {
-		if (instance == null) {
+		if (instance === null) {
 			instance = new InstruccionFactory
 		}
 		instance
@@ -43,7 +43,7 @@ class InstruccionFactory {
 
 	def getInstruction(ProgramIterator programIt, byte codigoInstruccion) {
 		val instruccionAEjecutar = instructions.get(codigoInstruccion).create(programIt)
-		if (instruccionAEjecutar == null) {
+		if (instruccionAEjecutar === null) {
 			throw new SystemException("La instrucción de código " + codigoInstruccion + " no es reconocida")
 		}
 		instruccionAEjecutar
