@@ -3,17 +3,20 @@ package ar.edu.microprocesadorCreacionales
 import ar.edu.microprocesadorCreacionales.creationals.ProgramBuilder
 import ar.edu.microprocesadorCreacionales.excepciones.SystemException
 import java.util.List
-import org.junit.Assert
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
+import static org.junit.jupiter.api.Assertions.assertEquals
+import static org.junit.jupiter.api.Assertions.assertThrows
 
+@DisplayName("(Versión refactorizada) Dado un microprocesador")
 class TestMicrocontrollerRefactorizado {
 
 	Microcontroller micro
 	List<Byte> programNOP
 	List<Byte> programSuma8y5
 
-	@Before
+	@BeforeEach
 	def void setUp() {
 		micro = new MicrocontrollerImpl
 		programNOP = new ProgramBuilder()
@@ -31,6 +34,7 @@ class TestMicrocontrollerRefactorizado {
 	}
 
 	@Test
+	@DisplayName("al ejecutar cada instrucción va avanzando el program counter")
 	def void nop() {
 		micro => [
 			loadProgram(programNOP)
@@ -39,10 +43,11 @@ class TestMicrocontrollerRefactorizado {
 			step
 			step
 		]
-		Assert.assertEquals(3, micro.PC)
+		assertEquals(3, micro.PC)
 	}
 
 	@Test
+	@DisplayName("puede hacer una suma de números pequeños y dejar el resultado en los acumuladores")
 	def void suma() {
 		micro => [
 			loadProgram(programSuma8y5)
@@ -53,31 +58,41 @@ class TestMicrocontrollerRefactorizado {
 			step
 			stop
 		]
-		Assert.assertEquals(13, micro.AAcumulator)
-		Assert.assertEquals(0, micro.BAcumulator)
+		assertEquals(13, micro.AAcumulator)
+		assertEquals(0, micro.BAcumulator)
 	}
 
-	@Test(expected=typeof(SystemException))
+	@DisplayName("al intentar cargar un programa mientras otro lo ejecuta debe resultar en error")
 	def void cargarProgramaMientrasOtroEjecuta() {
-		micro => [
-			loadProgram(programNOP)
-			start
-			loadProgram(programNOP)
-		]
+		assertThrows(SystemException, [
+			micro => [
+				loadProgram(programNOP)
+				start
+				loadProgram(programNOP)
+			]
+		])
 	}
 
-	@Test(expected=typeof(SystemException))
+
+	@Test
+	@DisplayName("no permite ejecutar un programa si el micro no fue iniciado")
 	def void ejecutarProgramaNoEmpezado() {
-		micro.step()
-	}
-
-	@Test(expected=typeof(SystemException))
-	def void ejecutarProgramaNoCargado() {
-		micro.start()
-		micro.step()
+		assertThrows(SystemException, [
+			micro.step()
+		])
 	}
 
 	@Test
+	@DisplayName("no permite ejecutar un programa que no fue cargado en su memoria")
+	def void ejecutarProgramaNoCargado() {
+		assertThrows(SystemException, [
+			micro.start()
+			micro.step()
+		])
+	}
+
+	@Test
+	@DisplayName("puede ejecutar un programa a continuación de otro")
 	def void ejecutarDosProgramas() {
 		suma()
 		nop()
