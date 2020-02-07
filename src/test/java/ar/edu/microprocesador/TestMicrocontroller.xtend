@@ -31,7 +31,7 @@ class TestMicrocontroller {
 	}
 
 	@Test
-	@DisplayName("al ejecutar un programa con NOPs va avanzando el program counter")
+	@DisplayName("al ejecutar cada instrucción va avanzando el program counter")
 	def void programCounterAvanzaConNOP() {
 		val nop = new NOP
 		micro.run(
@@ -45,7 +45,7 @@ class TestMicrocontroller {
 	}
 
 	@Test
-	@DisplayName("puede hacer una suma simple y dejar el resultado en los acumuladores")
+	@DisplayName("puede hacer una suma de números pequeños y dejar el resultado en los acumuladores")
 	def void sumaSimple() {
 		micro.run(#[
 			new LODV(10),
@@ -94,7 +94,7 @@ class TestMicrocontroller {
 	 *  el acumulador B tenía y viceversa. 
 	 **/
 	@Test
-	@DisplayName("puede deshacer un SWAP correctamente, dejando los acumuladores como estaban")
+	@DisplayName("puede deshacer una operación simple correctamente, dejando los acumuladores como estaban")
 	def void undoSWAP() {
 		val carga100 = new LODV(100)
 		val swap = swap
