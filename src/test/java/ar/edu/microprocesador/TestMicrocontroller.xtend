@@ -12,21 +12,26 @@ import ar.edu.microprocesador.instrucciones.SUB
 import ar.edu.microprocesador.instrucciones.SWAP
 import ar.edu.microprocesador.instrucciones.WHNZ
 import java.util.ArrayList
-import org.junit.Assert
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
 
+import static org.junit.jupiter.api.Assertions.assertEquals
+import static org.junit.jupiter.api.Assertions.assertThrows
+
+@DisplayName("Dado un microprocesador")
 class TestMicrocontroller {
 
 	Microcontroller micro
 	Instruccion swap = new SWAP
 
-	@Before
+	@BeforeEach
 	def void init() {
 		micro = new MicrocontrollerImpl
 	}
 
 	@Test
+	@DisplayName("al ejecutar un programa con NOPs va avanzando el program counter")
 	def void programCounterAvanzaConNOP() {
 		val nop = new NOP
 		micro.run(
@@ -36,10 +41,11 @@ class TestMicrocontroller {
 				nop
 			]
 			)
-		Assert.assertEquals(3, micro.getPC)
+		assertEquals(3, micro.getPC)
 	}
 
 	@Test
+	@DisplayName("puede hacer una suma simple y dejar el resultado en los acumuladores")
 	def void sumaSimple() {
 		micro.run(#[
 			new LODV(10),
@@ -47,11 +53,12 @@ class TestMicrocontroller {
 			new LODV(22),
 			new ADD
 		])
-		Assert.assertEquals(32, micro.getAAcumulator)
-		Assert.assertEquals(0, micro.getBAcumulator)
+		assertEquals(32, micro.getAAcumulator)
+		assertEquals(0, micro.getBAcumulator)
 	}
 
 	@Test
+	@DisplayName("puede hacer una suma de números grandes y dejar el resultado en los acumuladores")
 	def void sumaNumerosGrandes() {
 		micro.run(
 			#[
@@ -60,19 +67,23 @@ class TestMicrocontroller {
 				new LODV(50),
 				new ADD
 			])
-		Assert.assertEquals(127, micro.getAAcumulator)
-		Assert.assertEquals(23, micro.getBAcumulator)
+		assertEquals(127, micro.getAAcumulator)
+		assertEquals(23, micro.getBAcumulator)
 	}
 
-	@Test(expected=typeof(ArithmeticException))
+	@Test
+	@DisplayName("al dividir por cero debe detener la ejecución por error")
 	def void divisionPorCero() {
-		micro.run(
-			#[
-				new LODV(0),
-				swap,
-				new LODV(2),
-				new DIV
-			])
+		assertThrows(ArithmeticException, [
+			micro.run(
+				#[
+					new LODV(0),
+					swap,
+					new LODV(2),
+					new DIV
+				]
+			)
+		])
 	}
 
 	/**
@@ -83,16 +94,17 @@ class TestMicrocontroller {
 	 *  el acumulador B tenía y viceversa. 
 	 **/
 	@Test
+	@DisplayName("puede deshacer un SWAP correctamente, dejando los acumuladores como estaban")
 	def void undoSWAP() {
 		val carga100 = new LODV(100)
 		val swap = swap
 		carga100.execute(micro)
 		swap.execute(micro)
-		Assert.assertEquals(100, micro.getBAcumulator)
-		Assert.assertEquals(0, micro.getAAcumulator)
+		assertEquals(100, micro.getBAcumulator)
+		assertEquals(0, micro.getAAcumulator)
 		swap.undo(micro)
-		Assert.assertEquals(0, micro.getBAcumulator)
-		Assert.assertEquals(100, micro.getAAcumulator)
+		assertEquals(0, micro.getBAcumulator)
+		assertEquals(100, micro.getAAcumulator)
 	}
 
 	/**
@@ -102,6 +114,7 @@ class TestMicrocontroller {
 	 *  previamente. 
 	 */
 	@Test
+	@DisplayName("puede deshacer una suma correctamente, dejando los acumuladores como estaban")
 	def void undoADD() {
 		val carga100 = new LODV(100)
 		val swap = swap
@@ -110,36 +123,39 @@ class TestMicrocontroller {
 		new LODV(50).execute(micro)
 		val suma = new ADD
 		suma.execute(micro)
-		Assert.assertEquals(127, micro.getAAcumulator)
-		Assert.assertEquals(23, micro.getBAcumulator)
+		assertEquals(127, micro.getAAcumulator)
+		assertEquals(23, micro.getBAcumulator)
 		suma.undo(micro)
-		Assert.assertEquals(50, micro.getAAcumulator)
-		Assert.assertEquals(100, micro.getBAcumulator)
+		assertEquals(50, micro.getAAcumulator)
+		assertEquals(100, micro.getBAcumulator)
 	}
 
 	@Test
+	@DisplayName("puede resolver un if exitosamente - rama verdadera por el if")
 	def void ifSWAP() {
 		micro.AAcumulator = 5 as byte
 		micro.BAcumulator = 9 as byte
 		micro.run(#[
 			new IFNZ(#[swap])
 		])
-		Assert.assertEquals(9, micro.AAcumulator)
-		Assert.assertEquals(5, micro.BAcumulator)
+		assertEquals(9, micro.AAcumulator)
+		assertEquals(5, micro.BAcumulator)
 	}
 
 	@Test
+	@DisplayName("puede resolver un if exitosamente - rama falsa por el else")
 	def void ifSWAPnot() {
 		micro.AAcumulator = 0 as byte
 		micro.BAcumulator = 9 as byte
 		micro.run(#[
 			new IFNZ(#[swap])
 		])
-		Assert.assertEquals(0, micro.AAcumulator)
-		Assert.assertEquals(9, micro.BAcumulator)
+		assertEquals(0, micro.AAcumulator)
+		assertEquals(9, micro.BAcumulator)
 	}
 
 	@Test
+	@DisplayName("puede resolver un if exitosamente - múltiples operaciones")
 	def void ifVariasInstrucciones() {
 		micro.AAcumulator = 5 as byte
 		micro.BAcumulator = 9 as byte
@@ -149,11 +165,12 @@ class TestMicrocontroller {
 				new ADD
 			])
 		])
-		Assert.assertEquals(14, micro.AAcumulator)
-		Assert.assertEquals(0, micro.BAcumulator)
+		assertEquals(14, micro.AAcumulator)
+		assertEquals(0, micro.BAcumulator)
 	}
 
 	@Test
+	@DisplayName("puede sumar los primeros cinco números utilizando un while")
 	def void sumaPrimeros5Numeros() {
 		// Cargo 0 (el T = total) en el campo de datos 1
 		// Cargo 5 (el I = indice) en Acumulador A 
@@ -187,7 +204,7 @@ class TestMicrocontroller {
 			add(new LOD(1))
 		]
 		micro.run(programaSuma5PrimerosNumeros)
-		Assert.assertEquals(15, micro.AAcumulator)
+		assertEquals(15, micro.AAcumulator)
 	}
 
 }
