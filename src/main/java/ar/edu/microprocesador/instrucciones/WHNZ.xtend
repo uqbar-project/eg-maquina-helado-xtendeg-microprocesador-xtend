@@ -10,10 +10,8 @@ class WHNZ extends InstruccionMultiple {
 		super(instrucciones)
 	}
 
-	override doExecute(Microcontroller micro) {
-		while (this.condicionACumplir(micro)) {
-			super.doExecute(micro)
-		}
+	override operate(Microcontroller micro, (Microcontroller)=>void instruction) {
+		while (micro.condicionACumplir) instruction.apply(micro)
 	}
 
 }

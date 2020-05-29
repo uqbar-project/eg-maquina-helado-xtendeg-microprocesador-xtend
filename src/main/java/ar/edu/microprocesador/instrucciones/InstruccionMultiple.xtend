@@ -12,10 +12,13 @@ abstract class InstruccionMultiple extends Instruccion {
 	}
 	
 	override doExecute(Microcontroller micro) {
-		micro.run(instrucciones)
-		println(micro.toString)
+		micro.operate([ Microcontroller microcontroller | 
+			microcontroller.run(this.instrucciones)
+		])
 	}
-	
+
+	def void operate(Microcontroller micro, (Microcontroller)=>void instruction)
+
 	def condicionACumplir(Microcontroller micro) {
 		micro.AAcumulator != 0
 	}
