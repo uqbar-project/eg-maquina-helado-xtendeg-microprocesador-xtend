@@ -9,6 +9,7 @@ abstract class Instruccion implements Cloneable {
 
 	def void execute(Microcontroller micro) {
 		microBefore = micro.clone
+		micro.advancePC()
 		this.doExecute(micro)
 	}
 

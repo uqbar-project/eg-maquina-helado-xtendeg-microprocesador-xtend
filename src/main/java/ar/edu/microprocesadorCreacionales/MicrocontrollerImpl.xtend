@@ -114,9 +114,16 @@ class MicrocontrollerImpl implements Microcontroller {
 		if (!programIterator.hasNext()) {
 			throw new SystemException("No hay más instrucciones para ejecutar")
 		}
-		programIterator.next().execute(this)
-		this.advancePC()
+		val proximaInstruccion = programIterator.next()
+		proximaInstruccion.execute(this)
 	}
 
+	override run() {
+		this.start()
+		while (programIterator.hasNext()) {
+			this.step()
+		}
+		this.stop()
+	}
 	
 }

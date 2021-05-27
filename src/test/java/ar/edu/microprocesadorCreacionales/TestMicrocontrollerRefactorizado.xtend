@@ -13,35 +13,35 @@ import static org.junit.jupiter.api.Assertions.assertThrows
 class TestMicrocontrollerRefactorizado {
 
 	Microcontroller micro
-	List<Byte> programNOP
-	List<Byte> programSuma8y5
 
 	@BeforeEach
 	def void setUp() {
 		micro = new MicrocontrollerImpl
-		programNOP = new ProgramBuilder()
+	}
+
+	def programNOP() {
+		new ProgramBuilder()
 			.NOP
 			.NOP
 			.NOP
 			.build
+	}
 			
-		programSuma8y5 = new ProgramBuilder()
+	def	programSuma8y5() {
+		new ProgramBuilder()
 			.LODV(8)
 			.SWAP
 			.LODV(5)
 			.ADD
-			.build
+			.build	
 	}
-
+	
 	@Test
 	@DisplayName("al ejecutar cada instrucción va avanzando el program counter")
 	def void nop() {
 		micro => [
 			loadProgram(programNOP)
-			start
-			step
-			step
-			step
+			run
 		]
 		assertEquals(3, micro.PC)
 	}
@@ -51,12 +51,7 @@ class TestMicrocontrollerRefactorizado {
 	def void suma() {
 		micro => [
 			loadProgram(programSuma8y5)
-			start
-			step
-			step
-			step
-			step
-			stop
+			run
 		]
 		assertEquals(13, micro.AAcumulator)
 		assertEquals(0, micro.BAcumulator)

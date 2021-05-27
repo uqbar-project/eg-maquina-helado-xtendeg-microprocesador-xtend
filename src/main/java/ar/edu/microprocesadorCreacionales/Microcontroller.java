@@ -112,20 +112,6 @@ public interface Microcontroller extends Cloneable {
 	public void copyFrom(Microcontroller micro);
 
 	public Microcontroller clone();
-	/**
-	 * Retorna el valor de la memoria de programa en la direccion indicada
-	 * 
-	 * @param addr
-	 * @return
-	 */
-	//public byte getProgram(int addr);
 
-	/**
-	 * Setea el valor de la memoria de programa
-	 * 
-	 * @param addr
-	 * @param value
-	 */
-	//public void setProgram(int addr, byte value);
-
+	public void run();
 }
